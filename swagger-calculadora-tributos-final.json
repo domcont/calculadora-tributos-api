@@ -1,0 +1,86 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "API Intermedi\u00e1ria - Calculadora de Tributos",
+    "description": "Encaminha dados para a API da Receita Federal e retorna a resposta completa.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/calculo": {
+      "post": {
+        "summary": "Calcula tributos com base na API da Receita",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "valorOperacao": {
+                    "type": "number",
+                    "example": 1000.0
+                  },
+                  "ufOrigem": {
+                    "type": "string",
+                    "example": "SP"
+                  },
+                  "ufDestino": {
+                    "type": "string",
+                    "example": "RJ"
+                  },
+                  "codigoNCM": {
+                    "type": "string",
+                    "example": "22030000"
+                  },
+                  "tipoPessoa": {
+                    "type": "string",
+                    "example": "juridica"
+                  },
+                  "cnae": {
+                    "type": "string",
+                    "example": "4639199"
+                  },
+                  "naturezaOperacao": {
+                    "type": "string",
+                    "example": "venda"
+                  }
+                },
+                "required": [
+                  "valorOperacao",
+                  "ufOrigem",
+                  "ufDestino",
+                  "codigoNCM",
+                  "tipoPessoa",
+                  "cnae",
+                  "naturezaOperacao"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Resposta completa da Receita Federal",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Conte\u00fado conforme resposta da API oficial da Receita Federal."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro na comunica\u00e7\u00e3o com a Receita"
+          }
+        },
+        "operationId": "calcularTributos"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://piloto-cbs.tributos.gov.br"
+    }
+  ]
+}
